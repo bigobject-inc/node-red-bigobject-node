@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    RED.nodes.registerType('BigObject SQL',{
+        category: 'input',
+        color: '#ffffff',
+        defaults: {
+            name: {value:""},
+//	    boserver: {value:"127.0.0.1:9090"},
+		boserver: {value:"", type:"boserver"},
+	    stmt: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "bo.png",
+        label: function() {
+            return this.name||"BigObject SQL";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="BigObject SQL">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+	<br>
+        <label for="node-input-boserver"><i class="icon-tag"></i>Server</label>
+        <input type="text" id="node-input-boserver" placeholder="Server">
+	<br>
+	<label for="node-input-stmt"><i class="icon-tag"></i>Statement</label>
+        <input type="text" id="node-input-stmt" placeholder="Statement">
+        <br>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="BigObject SQL">
+    <p>A simple node that perform the SQL statement described in statement</p>
+    <p>Support Statement : select create insert load update trim drop delete alter show desc</p>
+    <p>The result will be placed in msg.payload</p>
+</script>

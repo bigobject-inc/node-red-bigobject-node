@@ -1,0 +1,34 @@
+<script type="text/javascript">
+    RED.nodes.registerType('BigObject sh',{
+        category: 'function',
+        color: '#ffffff',
+        defaults: {
+            name: {value:""},
+//	    boserver: {value:"127.0.0.1:9090"}
+	    boserver: {value:"", type:"boserver"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "bo.png",
+        label: function() {
+            return this.name||"BigObject sh";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="BigObject sh">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i>Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+	<br>
+        <label for="node-input-boserver"><i class="icon-tag"></i>Server</label>
+        <input type="text" id="node-input-boserver" placeholder="Server">
+	<br>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="BigObject sh">
+    <p>A simple node that perform the statement described in msg.stmt by a BigObject server</p>
+    <p> ex. msg.stmt='show tables'</p>
+    <p> The result will be placed in msg.payload</p>
+</script>
