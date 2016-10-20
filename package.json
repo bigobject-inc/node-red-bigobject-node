@@ -13,7 +13,8 @@
 		"boa":"bigobject/boa.js",
 		"bomart":"bigobject/bomart.js",
 		"bosh":"bigobject/bosh.js",
-		"bosql":"bigobject/bosql.js"
+		"bosql":"bigobject/bosql.js",
+		"boserver":"bigobject/boserver.js"
         }
     },
  
