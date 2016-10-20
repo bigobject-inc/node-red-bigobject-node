@@ -1,4 +1,4 @@
-node-red-contrib-bigobejct
+node-red-contrib-bigobject
 ==============================
 BigObject node-red nodes
 
