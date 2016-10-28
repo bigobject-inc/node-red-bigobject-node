@@ -26,8 +26,9 @@ module.exports = function(RED) {
 		if(msg.payload != "")
 		{
 			var insert_data_str = "";
-			var msg_array = csv.parse(msg.payload);
-//			console.log(msg.payload);
+			var msg_array = csv.parse(msg.payload , ",");
+			
+//			console.log(msg_array);
 			var array = [];
 			if(node.index != "*" && node.index != "")
 			{
@@ -49,7 +50,7 @@ module.exports = function(RED) {
 					for(var j = 0; j < array.length; j++)
 					{
 						if(j != 0){ insert_data_str += ",";}
-						insert_data_str += msg_array_t[array[j]];
+						insert_data_str += "'" + msg_array_t[array[j]] + "'";
 					}
 				}
 				else
@@ -57,7 +58,7 @@ module.exports = function(RED) {
 					for(var j = 0; j < msg_array_t.length; j++)
                                         {
 		                                if(j != 0){ insert_data_str += ",";}
-                		                insert_data_str += msg_array_t[j];
+                		                insert_data_str += "'" + msg_array_t[j] + "'";
                                         }
 
 				}
