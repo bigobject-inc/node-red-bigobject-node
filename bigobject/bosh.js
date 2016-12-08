@@ -32,10 +32,23 @@ module.exports = function(RED) {
 			if(error == null)
 			{
 				node.status({fill:"green",shape:"dot",text:"connected"});
-				res_str = body;
+                                if(body.Status=="0")
+                                {
+                                        res_str = body;
+        //                      msg.payload=res_str;
+                                        msg = {payload : res_str
+                                                , error:0, nodeid:node.id};
+                                }
+                                else
+                                {
+                                        res_str = body.Err;
+                                        msg = {payload : res_str
+		                                , error: body.Status , nodeid:node.id};
+				}
+//				res_str = body;
 	//			msg.payload=res_str;
-				msg = {payload : res_str
-					, error:0, nodeid:node.id};
+//				msg = {payload : res_str
+//					, error:0, nodeid:node.id};
 				node.send(msg);
 			}
 			else
