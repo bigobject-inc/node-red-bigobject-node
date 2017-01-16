@@ -6,7 +6,9 @@
             name: {value:""},
 	    boserver: {value:"", type:"boserver", required:true},
 	    table: {value:"", required:true},
-	    index: {value:"", required:true}
+	    index: {value:"", required:true},
+            encodingconv : {value:false},
+            sourceencoding : {value:""}
         },
         inputs:1,
         outputs:1,
@@ -35,6 +37,21 @@
         <input type="text" id="node-input-index" placeholder="Index">
 	(start at 0, empty or * = all)
     </div>
+    <br>
+    Character encoding conversion:
+    <br>
+    If the checkbox is checked, use a Buffer in msg.payload as an input rather than a string.
+    <div class="form-row">
+        <label for="node-input-encodingconv"><i class="icon-tag"></i>Encoding conversion</label>
+        <input type="checkbox" id="node-input-encodingconv" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sourceencoding"><i class="fa fa-tasks"></i>Source encoding</label>
+        <select type="text" id="node-input-sourceencoding" style="width:70%;">
+            <option value="big5">big5</option>
+        </select>
+    </div>
+
 </script>
 
 <script type="text/x-red" data-help-name="BigObject CSV stream">

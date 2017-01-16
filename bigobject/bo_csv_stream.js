@@ -4,6 +4,8 @@ module.exports = function(RED) {
 	this.server = RED.nodes.getNode(config.boserver);
 	this.table = config.table;
 	this.index = config.index;
+	this.encodingconv = config.encodingconv
+	this.sourceencoding = config.sourceencoding
 
         var node = this;
 	
@@ -25,6 +27,14 @@ module.exports = function(RED) {
         this.on('input', function(msg) {
 		if(msg.payload != "")
 		{
+			if(node.encodingconv == true)
+			{
+				var iconv = require('iconv-lite');
+				tmp_msg = iconv.decode(new Buffer(msg.payload), node.sourceencoding);
+				//console.log("1")
+				msg.payload = (iconv.encode(tmp_msg, 'utf8')).toString();
+				//console.log(msg.payload);
+			}
 			var insert_data_str = "";
 			var msg_array = csv.parse(msg.payload , ",");
 			
