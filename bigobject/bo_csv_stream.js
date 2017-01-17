@@ -4,9 +4,9 @@ module.exports = function(RED) {
 	this.server = RED.nodes.getNode(config.boserver);
 	this.table = config.table;
 	this.index = config.index;
-	this.encodingconv = config.encodingconv
-	this.sourceencoding = config.sourceencoding
-
+	this.encodingconv = config.encodingconv;
+	this.sourceencoding = config.sourceencoding;
+	this.skiprows = config.skiprows;
         var node = this;
 	
 	var request = require('request');
@@ -48,6 +48,11 @@ module.exports = function(RED) {
 
 			for(var i = 0; i < msg_array.length; i++) 
 			{
+				if(node.skiprows != "" && node.skiprows > i)
+				{
+					continue;
+				}
+
 				if(insert_data_str != "")
 				{
 					insert_data_str += ",";

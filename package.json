@@ -1,10 +1,11 @@
 {
   "name": "node-red-contrib-bigobject",
-  "version": "1.0.6",
+  "version": "1.0.9",
   "description": "BigObject nodes for node-red",
   "dependencies": {
 	"request":"2.75.0",
-	"csv-string":"2.3.0"
+	"csv-string":"2.3.0",
+	"iconv-lite":"0.4.15"
     },
 
   "node-red"     : {

@@ -7,6 +7,7 @@
 	    boserver: {value:"", type:"boserver", required:true},
 	    table: {value:"", required:true},
 	    index: {value:"", required:true},
+            skiprows: {value:""},
             encodingconv : {value:false},
             sourceencoding : {value:""}
         },
@@ -37,6 +38,11 @@
         <input type="text" id="node-input-index" placeholder="Index">
 	(start at 0, empty or * = all)
     </div>
+    <div class="form-row">
+        <label for="node-input-skiprows"><i class="icon-tag"></i>Skip first n rows</label>
+	<input type="text" id="node-input-skiprows" placeholder="Index">
+    </div>
+
     <br>
     Character encoding conversion:
     <br>
