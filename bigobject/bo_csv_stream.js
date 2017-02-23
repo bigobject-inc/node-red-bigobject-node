@@ -32,9 +32,12 @@ module.exports = function(RED) {
 				var iconv = require('iconv-lite');
 				tmp_msg = iconv.decode(new Buffer(msg.payload), node.sourceencoding);
 				//console.log("1")
-				msg.payload = ((iconv.encode(tmp_msg, 'utf8')).toString()).replace(/'/g, '\\\'').replace(/"/g, '\\"');
+				//msg.payload = ((iconv.encode(tmp_msg, 'utf8')).toString()).replace(/'/g, '\\\'').replace(/"/g, '\\"');
+				msg.payload = (iconv.encode(tmp_msg, 'utf8')).toString()
 				//console.log(msg.payload);
 			}
+			msg.payload = msg.payload.replace(/'/g, '\\\'').replace(/"/g, '\\"');
+
 			var insert_data_str = "";
 			var msg_array = csv.parse(msg.payload , ",");
 			
