@@ -45,15 +45,22 @@ module.exports = function(RED) {
                                 if(body.Status=="0")
                                 {
                                         res_str = body.Content;
-        //                      msg.payload=res_str;
-                                        msg = {payload : res_str
-                                                , error:0, nodeid:node.id};
+//                                        msg = {payload : res_str
+//                                                , error:0, nodeid:node.id};
+					msg.payload=res_str;
+					msg.error=0;
+					msg.nodeid=node.id;
                                 }
                                 else
                                 {
                                         res_str = body.Err;
-                                        msg = {payload : res_str
-                                                , error: body.Status , nodeid:node.id};
+//                                        msg = {payload : res_str
+//                                                , error: body.Status , nodeid:node.id};
+					msg.payload=res_str;
+					msg.error=body.Status;
+					msg.nodeid=node.id;
+
+
 				}
 //				res_str = body.Content;
 	//			msg.payload=res_str;

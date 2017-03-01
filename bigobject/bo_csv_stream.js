@@ -82,8 +82,21 @@ module.exports = function(RED) {
 				}
 				insert_data_str += ")"
 			}
-			var insert_stmt = "insert into " + node.table 
+			var table_name ="";
+			if (msg.table != undefined)			
+			{
+				table_name = msg.table;
+			}
+			else
+			{
+				table_name = node.table;
+			}
+
+			var insert_stmt = "insert into " + table_name 
                                 + " values " + insert_data_str;
+
+//			var insert_stmt = "insert into " + node.table 
+//                                + " values " + insert_data_str;
 //			console.log(insert_stmt);
 			var myJSONObject = {"Stmt":insert_stmt};
 		        request({
@@ -96,8 +109,11 @@ module.exports = function(RED) {
 				{
 					node.status({fill:"green",shape:"dot",text:"connected"});
 					res_str = body;
-					msg = {payload : res_str
-						, error:0, nodeid:node.id};
+//					msg = {payload : res_str
+//						, error:0, nodeid:node.id};
+					msg.payload=res_str;
+					msg.error=0;
+					msg.nodeid=node.id;
 					node.send(msg);
 				}
 				else
