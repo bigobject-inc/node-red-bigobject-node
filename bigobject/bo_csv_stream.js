@@ -7,6 +7,7 @@ module.exports = function(RED) {
 	this.encodingconv = config.encodingconv;
 	this.sourceencoding = config.sourceencoding;
 	this.skiprows = config.skiprows;
+	this.replacequote = config.replacequote;
         var node = this;
 	
 	var request = require('request');
@@ -36,7 +37,10 @@ module.exports = function(RED) {
 				msg.payload = (iconv.encode(tmp_msg, 'utf8')).toString()
 				//console.log(msg.payload);
 			}
-			msg.payload = msg.payload.replace(/'/g, '\\\'').replace(/"/g, '\\"');
+			if(node.replacequote == true)
+			{
+				msg.payload = msg.payload.replace(/'/g, '\\\'').replace(/"/g, '\\"');
+			}
 
 			var insert_data_str = "";
 			var msg_array = csv.parse(msg.payload , ",");

@@ -9,6 +9,7 @@
 	    index: {value:"", required:true},
             skiprows: {value:""},
             encodingconv : {value:false},
+            replacequote : {value:false},
             sourceencoding : {value:""}
         },
         inputs:1,
@@ -51,6 +52,12 @@
         <label for="node-input-encodingconv"><i class="icon-tag"></i>Encoding conversion</label>
         <input type="checkbox" id="node-input-encodingconv" style="display: inline-block; width: auto; vertical-align: top;">
     </div>
+
+    <div class="form-row">
+        <label for="node-input-replacequote"><i class="icon-tag"></i>replace quote</label>
+        <input type="checkbox" id="node-input-replacequote" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+
     <div class="form-row">
         <label for="node-input-sourceencoding"><i class="fa fa-tasks"></i>Source encoding</label>
         <select type="text" id="node-input-sourceencoding" style="width:70%;">
