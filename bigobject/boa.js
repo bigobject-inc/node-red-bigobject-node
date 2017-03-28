@@ -42,6 +42,66 @@ module.exports = function(RED) {
 			if(error == null)
 			{
 				node.status({fill:"green",shape:"dot",text:"connected"});
+				/////////////////////////////////////////////////
+				if (body.toString().indexOf("\n") != -1)
+				{
+					var res_t = body.split('\n');
+
+					if(JSON.parse(res_t[0]).Status != "0")
+					{
+		                                res_str = JSON.parse(res_t[0]).Err;
+						msg.payload=res_str;
+						msg.error=body.Status;
+						msg.nodeid=node.id;
+					}
+					else
+					{
+						res_str = '[';
+						for(i = 0 ; i < res_t.length ; i++)
+						{
+							if(res_t[i] != '')
+							{
+								if(i > 0 )
+								{
+									 res_str += ',';
+								}
+
+								res_str += res_t[i];
+							}
+						}
+						res_str += ']';
+//						console.log(res_str);
+						msg.payload=JSON.parse(res_str);
+						msg.error=0;
+						msg.nodeid=node.id;
+
+					}
+				}
+				else
+				{
+//					var res_t=[];
+//					res_t[0]=body;
+					if(body.Status != "0")
+					{
+		                                res_str = body.Err;
+						msg.payload=res_str;
+						msg.error=body.Status;
+						msg.nodeid=node.id;
+					}
+					else
+					{
+						res_str = '[';
+						res_str += JSON.stringify(body);
+						res_str += ']';
+						msg.payload=JSON.parse(res_str);
+//						console.log(res_str);
+						msg.error=0;
+						msg.nodeid=node.id;
+
+					}
+				}
+				/////////////////////////////////////////////////
+/*
                                 if(body.Status=="0")
                                 {
                                         res_str = body.Content;
@@ -62,10 +122,7 @@ module.exports = function(RED) {
 
 
 				}
-//				res_str = body.Content;
-	//			msg.payload=res_str;
-//				msg = {payload : res_str
-//					, error:0, nodeid:node.id};
+*/
 				node.send(msg);
 			
 			}
