@@ -1,7 +1,6 @@
 module.exports = function(RED) {
     function bosql(config) {
         RED.nodes.createNode(this,config);
-//	this.boserver = config.boserver;
 	this.stmt = config.stmt;
         this.server = RED.nodes.getNode(config.boserver);
         var node = this;
