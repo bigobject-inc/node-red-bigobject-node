@@ -1,7 +1,6 @@
 module.exports = function(RED) {
     function bosh(config) {
         RED.nodes.createNode(this,config);
-//	this.boserver = config.boserver;
 	this.server = RED.nodes.getNode(config.boserver);
         var node = this;
 	
@@ -18,24 +17,26 @@ module.exports = function(RED) {
 			, error:-1, nodeid:node.id}
 		node.send(msg);
         }
-
+	
+	
         this.on('input', function(msg) {
                 var myJSONObject = {"Stmt":msg.stmt};
+
+		//send statement by http restful, use msg.stmt as the statement.
 	        request({
 	            url: server_url,
 	            method: "POST",
-	            json: true,   // <--Very important!!!
+	            json: true,
 	            body: myJSONObject
 	        }, function (error, response, body){
-	        //    res_str = body.Content;
-//			res_str = body
 
 			if(error == null)
 			{			
 				node.status({fill:"green",shape:"dot",text:"connected"});
-				/////////////////////////////////////////////////
+
 				if (body.toString().indexOf("\n") != -1)
 				{
+					// multiple return json case
 					var res_t = body.split('\n');
 
 					if(JSON.parse(res_t[0]).Status != "0")
@@ -61,7 +62,6 @@ module.exports = function(RED) {
 							}
 						}
 						res_str += ']';
-//						console.log(res_str);
 						msg.payload=JSON.parse(res_str);
 						msg.error=0;
 						msg.nodeid=node.id;
@@ -70,8 +70,7 @@ module.exports = function(RED) {
 				}
 				else
 				{
-//					var res_t=[];
-//					res_t[0]=body;
+					//single return case
 					if(body.Status != "0")
 					{
 		                                res_str = body.Err;
@@ -85,13 +84,11 @@ module.exports = function(RED) {
 						res_str += JSON.stringify(body);
 						res_str += ']';
 						msg.payload=JSON.parse(res_str);
-//						console.log(res_str);
 						msg.error=0;
 						msg.nodeid=node.id;
 
 					}
 				}
-				/////////////////////////////////////////////////
 
 				node.send(msg);
 			}

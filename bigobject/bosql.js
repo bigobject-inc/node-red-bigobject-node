@@ -19,7 +19,8 @@ module.exports = function(RED) {
 
 	var request = require('request');
 	var res_str
-//	var server_url = 'http://' + node.boserver  + '/cmd'	
+
+	//get first word for checking available statements
 	var stmt_check=node.stmt.split(" ")[0].toLowerCase();
 
 	this.on('input', function(msg) {
@@ -30,28 +31,28 @@ module.exports = function(RED) {
 		&& stmt_check != "alter" && stmt_check != "show"
 		&& stmt_check != "desc" && stmt_check != "set" )
 	{
+		// unavailable statements
 		msg={payload:"unsupport statements, please check the supported statement."
 			, error:-1, nodeid:node.id};
                 node.send(msg);
 	}
 	else
 	{
-
+		
 	        request({
 	            url: server_url,
 	            method: "POST",
 	            json: true,
 	            body: {"Stmt":node.stmt}
 	        }, function (error, response, body){
-		        //    res_str = body.Content;
 			if(error == null)
 			{
 				node.status({fill:"green",shape:"dot",text:"connected"});
-				/////////////////////////////////////////////////
+				
 				if (body.toString().indexOf("\n") != -1)
 				{
+					// multiple return json case
 					var res_t = body.split('\n');
-
 					if(JSON.parse(res_t[0]).Status != "0")
 					{
 		                                res_str = JSON.parse(res_t[0]).Err;
@@ -75,7 +76,6 @@ module.exports = function(RED) {
 							}
 						}
 						res_str += ']';
-//						console.log(res_str);
 						msg.payload=JSON.parse(res_str);
 						msg.error=0;
 						msg.nodeid=node.id;
@@ -84,8 +84,7 @@ module.exports = function(RED) {
 				}
 				else
 				{
-//					var res_t=[];
-//					res_t[0]=body;
+					// single return json case
 					if(body.Status != "0")
 					{
 		                                res_str = body.Err;
@@ -99,34 +98,11 @@ module.exports = function(RED) {
 						res_str += JSON.stringify(body);
 						res_str += ']';
 						msg.payload=JSON.parse(res_str);
-//						console.log(res_str);
 						msg.error=0;
 						msg.nodeid=node.id;
 
 					}
 				}
-				/////////////////////////////////////////////////
-/*
-				if(body.Status=="0")
-				{
-					res_str = body.Content;
-//					msg = {payload : res_str
-//						, error:0, nodeid:node.id};
-					msg.payload=res_str;
-					msg.error=0;
-					msg.nodeid=node.id;
-				}
-				else
-				{
-					res_str = body.Err;
-//                                        msg = {payload : res_str
-//                                                , error: body.Status , nodeid:node.id};
-					msg.payload=res_str;
-					msg.error=body.Status;
-					msg.nodeid=node.id;
-				}
-
-*/
 				node.send(msg);
 			}
 			else
