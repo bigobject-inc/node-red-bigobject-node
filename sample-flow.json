@@ -1,0 +1,325 @@
+[
+    {
+        "id": "9d2eeaed.7ac638",
+        "type": "tab",
+        "label": "Training UC"
+    },
+    {
+        "id": "75e5c51d.f36f8c",
+        "type": "catch",
+        "z": "9d2eeaed.7ac638",
+        "name": "",
+        "scope": null,
+        "x": 120,
+        "y": 64,
+        "wires": [
+            [
+                "289c1dca.9424a2"
+            ]
+        ]
+    },
+    {
+        "id": "289c1dca.9424a2",
+        "type": "debug",
+        "z": "9d2eeaed.7ac638",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 313.9999694824219,
+        "y": 64,
+        "wires": []
+    },
+    {
+        "id": "4950e922.521198",
+        "type": "comment",
+        "z": "9d2eeaed.7ac638",
+        "name": "BigObject Nodes for Node-RED Use Cases",
+        "info": "",
+        "x": 220.10000610351562,
+        "y": 145.40000915527344,
+        "wires": []
+    },
+    {
+        "id": "cf63b9dd.a6a158",
+        "type": "inject",
+        "z": "9d2eeaed.7ac638",
+        "name": "Use SQL stmt in node",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 160.10001373291016,
+        "y": 209.8000316619873,
+        "wires": [
+            [
+                "af7c9ef5.9c56d"
+            ]
+        ]
+    },
+    {
+        "id": "af7c9ef5.9c56d",
+        "type": "BigObject SQL",
+        "z": "9d2eeaed.7ac638",
+        "name": "SELECT",
+        "boserver": "b7c7b281.1183",
+        "stmt": "select * from sales limit 1",
+        "x": 362.10001373291016,
+        "y": 210.20001792907715,
+        "wires": [
+            [
+                "bc2bbfb9.d5972",
+                "ae55ebbb.fc91e8"
+            ]
+        ]
+    },
+    {
+        "id": "bc2bbfb9.d5972",
+        "type": "debug",
+        "z": "9d2eeaed.7ac638",
+        "name": "Output debug",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 837.0000190734863,
+        "y": 210.00000667572021,
+        "wires": []
+    },
+    {
+        "id": "ae55ebbb.fc91e8",
+        "type": "function",
+        "z": "9d2eeaed.7ac638",
+        "name": "Output post process",
+        "func": "var result = msg.payload;\n\nif(result.length > 0 && result[0].Content.content.length > 0)\n{\n    var dataset = result[0].Content.content;\n    msg = {};\n    msg.payload = dataset;\n    \n    return msg;\n}\nelse\n    return null;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 607.1000366210938,
+        "y": 265,
+        "wires": [
+            [
+                "bc2bbfb9.d5972"
+            ]
+        ]
+    },
+    {
+        "id": "915777cb.11a278",
+        "type": "inject",
+        "z": "9d2eeaed.7ac638",
+        "name": "Pass SQL stmt to node",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 157,
+        "y": 501,
+        "wires": [
+            [
+                "632a56f3.9b0778",
+                "2be6b9f.d30ab46"
+            ]
+        ]
+    },
+    {
+        "id": "632a56f3.9b0778",
+        "type": "function",
+        "z": "9d2eeaed.7ac638",
+        "name": "SELECT",
+        "func": "msg.stmt = \"select * from sales limit 1\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 501,
+        "wires": [
+            [
+                "b59d0bfb.1f8fc8"
+            ]
+        ]
+    },
+    {
+        "id": "2be6b9f.d30ab46",
+        "type": "function",
+        "z": "9d2eeaed.7ac638",
+        "name": "DESC",
+        "func": "msg.stmt = \"desc sales\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 569,
+        "wires": [
+            [
+                "b59d0bfb.1f8fc8"
+            ]
+        ]
+    },
+    {
+        "id": "b59d0bfb.1f8fc8",
+        "type": "BigObject sh",
+        "z": "9d2eeaed.7ac638",
+        "name": "",
+        "boserver": "b7c7b281.1183",
+        "x": 555.1000671386719,
+        "y": 539.2000112533569,
+        "wires": [
+            [
+                "1396b3e.856f84c"
+            ]
+        ]
+    },
+    {
+        "id": "40458b23.f3e0a4",
+        "type": "debug",
+        "z": "9d2eeaed.7ac638",
+        "name": "Output debug",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1049.0000305175781,
+        "y": 607.0000162124634,
+        "wires": []
+    },
+    {
+        "id": "1436aaeb.486375",
+        "type": "inject",
+        "z": "9d2eeaed.7ac638",
+        "name": "Error handle",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 128.00000762939453,
+        "y": 342.00001525878906,
+        "wires": [
+            [
+                "e204d19d.12827",
+                "1e2e8629.461e1a"
+            ]
+        ]
+    },
+    {
+        "id": "e204d19d.12827",
+        "type": "BigObject SQL",
+        "z": "9d2eeaed.7ac638",
+        "name": "SELECT(w/ err)",
+        "boserver": "b7c7b281.1183",
+        "stmt": "select * from sales_err limit 1",
+        "x": 328.00000762939453,
+        "y": 342.4000015258789,
+        "wires": [
+            [
+                "46b6df16.0b125",
+                "7455042d.7cbe9c"
+            ]
+        ]
+    },
+    {
+        "id": "46b6df16.0b125",
+        "type": "debug",
+        "z": "9d2eeaed.7ac638",
+        "name": "Output debug",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 560.9000129699707,
+        "y": 342.199990272522,
+        "wires": []
+    },
+    {
+        "id": "7455042d.7cbe9c",
+        "type": "switch",
+        "z": "9d2eeaed.7ac638",
+        "name": "Pass if no error",
+        "property": "error",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 1,
+        "x": 563.1000366210938,
+        "y": 398.60003662109375,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e2e8629.461e1a",
+        "type": "BigObject SQL",
+        "z": "9d2eeaed.7ac638",
+        "name": "SELECT(wo/ err)",
+        "boserver": "b7c7b281.1183",
+        "stmt": "select * from sales limit 1",
+        "x": 339,
+        "y": 398,
+        "wires": [
+            [
+                "7455042d.7cbe9c",
+                "46b6df16.0b125"
+            ]
+        ]
+    },
+    {
+        "id": "3f79544d.92f61c",
+        "type": "switch",
+        "z": "9d2eeaed.7ac638",
+        "name": "Advanced condition handle",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "data",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "schema",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 2,
+        "x": 778.0000152587891,
+        "y": 613.0000190734863,
+        "wires": [
+            [
+                "40458b23.f3e0a4"
+            ],
+            [
+                "40458b23.f3e0a4"
+            ]
+        ]
+    },
+    {
+        "id": "1396b3e.856f84c",
+        "type": "function",
+        "z": "9d2eeaed.7ac638",
+        "name": "Result dispatch",
+        "func": "if(msg.payload[0].Content.content != null)\n    msg.topic = \"data\";\nelse if(msg.payload[0].Content.schema != null)\n    msg.topic = \"schema\";\nelse\n    msg = null;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 737.0000190734863,
+        "y": 539.0000190734863,
+        "wires": [
+            [
+                "3f79544d.92f61c"
+            ]
+        ]
+    },
+    {
+        "id": "b7c7b281.1183",
+        "type": "boserver",
+        "z": "",
+        "host": "bigobject",
+        "port": "9090"
+    }
+]
