@@ -8,16 +8,16 @@
 	"iconv-lite":"0.4.15"
     },
 
-  "node-red"     : {
-        "nodes": {
-		"bo_csv_stream": "bigobject/bo_csv_stream.js",
-		"boa":"bigobject/boa.js",
-		"bomart":"bigobject/bomart.js",
-		"bosh":"bigobject/bosh.js",
-		"bosql":"bigobject/bosql.js",
-		"boserver":"bigobject/boserver.js"
-        }
-    },
+  "node-red": { 
+    "nodes": { 
+      "bo_csv_stream": "bigobject/bo_csv_stream.js",
+      "boa":"bigobject/boa.js",
+      "bomart":"bigobject/bomart.js",
+      "bosh":"bigobject/bosh.js",
+      "bosql":"bigobject/bosql.js",
+      "boserver":"bigobject/boserver.js" 
+    } 
+  },
  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,7 +27,7 @@
     "url": "git+https://github.com/bigobject-inc/node-red-contrib-bigobject.git"
   },
   "keywords": [
-    "bigobject"
+    "node-red", "bigobject"
   ],
   "author": "Eugene Lai <eugene@bigobject.io>",
   "license": "ISC",
